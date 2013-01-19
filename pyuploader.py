@@ -17,7 +17,7 @@ from datetime import datetime
 
 
 #PARAMETERS
-camera_id = 'alonso1'
+camera_id = 'alonso3'
 file_end = 'jpg'	#file ending. Do not include the .
 dir = './'			#relative path from python script to image file
 					#"./" = same folder
@@ -32,9 +32,10 @@ local = False		#set to true to use localhost FOR TESTING, false to use remote se
 
 
 
-#TOKEN
-token = '3g6cz8IoZ2OOhFhkZQVCJgsEtgFZVxMe'		#Don't change this - it's hardcoded on both the python and server sides
 
+###DO NOT CHANGE###
+token = '3g6cz8IoZ2OOhFhkZQVCJgsEtgFZVxMe'		#Don't change this - it's hardcoded on both the python and server sides
+###DO NOT CHANGE###
 
 
 
@@ -109,7 +110,11 @@ def post_image(upload_url,filename,time):
 			print(e)
 			print("Retrying...")
 			upload_attempts += 1
-
+			
+	if upload_attempts == 5:
+		os.remove(filename)
+		print('Image was deleted after 5 failed attempts to post')
+		return False
 
 #build base url
 if local == True:

@@ -1,0 +1,13 @@
+--Details--
+Format for photo filenames: YYYYMMDD-HHMMSS
+Photos can be in any format, just make sure you change the file_end parameter on line 21
+Photos can be placed in the same folder as the script, or in a different folder - just change the dir parameter on line 22 (it's a relative path)
+To change the camera id, change the camera_id parameter on line 20
+
+--Installing libraries--
+You'll need several libraries installed in your python environment for the  script to function - I've listed them at the top of the script. urllib2, os, and datetime are generally included in python distributions. poster is not, so you'll have to install it manually. In the blog post you sent me, I noticed that the author was able to install packages using pip on a Raspberry Pi (first couple of instructions in the "installation") section. If you have trouble with this, let me know - I might be able to help on the python end of the installation.
+
+--Testing on your desktop--
+Regardless, you can test this out on your desktop (you have to install poster here as well - if you're on a mac open terminal and type "sudo pip install poster"). 
+Put several photos with the proper naming convention in folder specified on line 22 (./ = same folder), and run pyuploader.py. Your photos will be uploaded to google app engine. If the upload fails, it is retried up to 5 times before the photo is deleted. If it succeeds, the photo is deleted.
+To view the photos you've uploaded, go to aegissurv.appspot.com/view
