@@ -2,6 +2,7 @@ import webapp2
 import logging
 
 import models
+from datetime import datetime
 
 from google.appengine.ext import blobstore
 from google.appengine.ext.webapp import blobstore_handlers
@@ -19,18 +20,35 @@ class PostHandler(blobstore_handlers.BlobstoreUploadHandler):
 	def post(self):
 		#check the token on the request
 		token = self.request.get('token')
-		logging.info(token)
+		if token == '3g6cz8IoZ2OOhFhkZQVCJgsEtgFZVxMe':
+			
+			camera_id = self.request.get('camera_id')
+			logging.info(camera_id)
+			
+			#check if camera exists
+			camera = models.Camera.gql("WHERE camera_id=:1",camera_id).get()
+			if not camera:
+				camera = models.Camera(camera_id=camera_id).put()
 		
+			#grab blobinfo
+			upload_files = self.get_uploads('file')
+			blob_info = upload_files[0]
+			
+			#grab time
+			string_time = self.request.get("time")
+			logging.info(string_time)
+			#parse time
+			raw_time = datetime.strptime(string_time,"%Y%m%d-%H%M%S")
+			logging.info(repr(raw_time))
+			
+			#store photo
+			photo = models.Photo(blob_key=blob_info,timestamp=raw_time,parent=camera)
+			photo.put()
+			
+			self.response.out.write(200)
 		
-		upload_files = self.get_uploads('file')
-		blob_info = upload_files[0]
-# 		self.redirect('/serve/%s' % blob_info.key())
-		time = int(self.request.get("time"))
-		
-		photo = models.Photo(blob_key=blob_info,time=time)
-		photo.put()
-		
-		self.response.out.write(500)
+		else:
+			self.response.out.write(403)
 
 class TestHandler(webapp2.RequestHandler):
 	def get(self):

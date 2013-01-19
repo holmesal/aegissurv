@@ -31,6 +31,7 @@ handlers:
   script: landing.app
 - url: /upload.*
   script: upload.app
+  secure: always
 - url: /view.*
   script: view.app
 - url: /photo.*
