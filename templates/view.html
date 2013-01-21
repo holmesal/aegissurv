@@ -1,0 +1,5 @@
+{% for photo in photos %}
+
+<p><h3>{{photo.timestamp}} from camera {{photo.parent().camera_id}}:</h3><a href="/photo/{{photo.blob_key.key()}}"><img src="/photo/{{photo.blob_key.key()}}" style="width:400;height:auto;"></a></p>
+
+{% endfor %}

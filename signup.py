@@ -1,26 +1,45 @@
 import webapp2
 import logging
-import jinja2
 import os
 import utils
 import models
+
+from gaesessions import get_current_session
 
 
 class SignupHandler(webapp2.RequestHandler):
 	def get(self):
 		
-		utils.session_bounce()
+		logging.info(get_current_session())
 		
-		jinja_environment = jinja2.Environment(loader=jinja2.FileSystemLoader(os.path.dirname(__file__)))
-		template = jinja_environment.get_template('templates/signup.html')
-		self.response.out.write(template.render())
+		template_values = {}
+		utils.respond(self,'templates/signup.html',template_values)
 	
 	def post(self):
 		
-		email = self.request.get('email')
+		email = self.request.get('email').lower()
 		pw1 = self.request.get('pw1')
 		pw2 = self.request.get('pw2')
 		
+		existing = models.User.gql("WHERE email=:1",email).get()
+		
+		if existing:
+			template_values = {
+				"error"		:	"That user already exists"
+			}
+			utils.respond(self,'templates/signup.html',template_values)
+		else:
+			#create the user
+			user = models.User(email=email,pw=pw1)
+			user.put()
+			
+			#store in session
+			session = get_current_session()
+			session['logged_in'] = True
+			session['user'] = user.key()
+			session.save()
+			
+			self.redirect('/link')
 		
 
 

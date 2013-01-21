@@ -38,6 +38,8 @@ handlers:
   script: photo.app
 - url: /signup
   script: signup.app
+- url: /link
+  script: link.app
 
 
 libraries:
