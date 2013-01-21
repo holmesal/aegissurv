@@ -36,6 +36,8 @@ handlers:
   script: view.app
 - url: /photo.*
   script: photo.app
+- url: /signup
+  script: signup.app
 
 
 libraries:
