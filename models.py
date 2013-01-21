@@ -8,6 +8,11 @@ class Photo(db.Model):
 class Camera(db.Model):
 	camera_id = db.StringProperty()
 	
+class User(db.Model):
+	cameras = db.ListProperty(db.Key)
+	email = db.StringProperty()
+	pw = db.StringProperty()
+	
 	
 #want multiple people to be able to access cameras?
 #set datetime format in stone
