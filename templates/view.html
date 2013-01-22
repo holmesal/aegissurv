@@ -25,6 +25,7 @@
 	      border-radius: 5px;
 	      margin-bottom: 50px;
 	      padding-bottom: 5px;
+	      box-shadow: 0px 0px 2px #949494;
       }
       
       .camimg{
@@ -128,18 +129,9 @@
     <!-- Le javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-<!--     <script src="../js/jquery.js"></script> -->
-<!--     <script src="../js/bootstrap.min.js"></script> -->
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
 
 
   </body>
 </html>
-
-{% for photo in photos %}
-<div class="span4">
-	<div class="inner-container">
-	<img class="camimg" src="/photo/{{photo.blob_key.key()}}">
-	<span>{{photo.timestamp}} from camera {{photo.parent().camera_id}}:</span>
-	</div>
-</div>
-{% endfor %}
