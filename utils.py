@@ -5,11 +5,11 @@ import os
 
 def session_bounce(self):
 	session = get_current_session()
-	if session.has_key('logged_in'):
-		if session['logged_in']:
-			pass
-	else:
+	state = session.get('logged_in',False)
+	
+	if state == False:
 		self.redirect('/login')
+		
 		
 def respond(self,html,template_values):
 	jinja_environment = jinja2.Environment(loader=jinja2.FileSystemLoader(os.path.dirname(__file__)))

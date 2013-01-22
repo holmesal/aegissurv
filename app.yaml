@@ -40,6 +40,10 @@ handlers:
   script: signup.app
 - url: /link
   script: link.app
+- url: /login
+  script: login.app
+- url: /logout
+  script: logout.app
 
 
 libraries:

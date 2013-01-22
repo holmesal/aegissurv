@@ -20,19 +20,25 @@ class LinkHandler(webapp2.RequestHandler):
 	def post(self):
 		
 		camera_id = self.request.get('camera_id')
+		camera_name = self.request.get('camera_name')
 		
 		camera = models.Camera.gql("WHERE camera_id=:1",camera_id).get()
 		
 		if not camera:
 			template_values = {
 				"error"		:	"Camera ID not found. Please try again.",
-				"camera_id"	:	camera_id
+				"camera_id"	:	camera_id,
+				"camera_name"	:	camera_name
 			}
 			utils.respond(self,'templates/link.html',template_values)
 		else:
 			#get current user
 			session = get_current_session()
 			user = db.get(session['user'])
+			
+			#update camera name
+			camera.camera_name = camera_name
+			camera.put()
 			
 			#add camera
 			user.cameras.append(camera.key())

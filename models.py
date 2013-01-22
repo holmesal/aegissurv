@@ -7,6 +7,7 @@ class Photo(db.Model):
 
 class Camera(db.Model):
 	camera_id = db.StringProperty()
+	camera_name = db.StringProperty(default='Unnamed Camera')
 	
 class User(db.Model):
 	cameras = db.ListProperty(db.Key)

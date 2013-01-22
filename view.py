@@ -12,6 +12,10 @@ from google.appengine.ext import blobstore
 class ViewHandler(webapp2.RequestHandler):
 	def get(self):
 		
+		utils.session_bounce(self)
+		
+		specific = self.request.get('camera',None)
+		
 		#grab session
 		session = get_current_session()
 		camera_keys = session.get("cameras")
@@ -20,19 +24,55 @@ class ViewHandler(webapp2.RequestHandler):
 		#get photos
 		photos = []
 		for camera in cameras:
-			pc = models.Photo.gql('WHERE ANCESTOR IS :1',camera).fetch(None)
-			photos.extend(pc)
+			
+			if specific:
+				view_all = False
+				if camera.camera_id == specific:
+					pc = models.Photo.gql('WHERE ANCESTOR IS :1',camera).fetch(None)
+					photos.extend(pc)
+					camera.active = True
+			else:
+				view_all = True
+				pc = models.Photo.gql('WHERE ANCESTOR IS :1',camera).fetch(None)
+				photos.extend(pc)
 		
 		#sort by date
 		photos.sort(key = lambda x: x.timestamp)
 		photos.reverse()
 		
+		#readable datetime
+		for photo in photos:
+			photo.human_time = photo.timestamp.strftime("%A, %d %B %Y %I:%M %p")
+			logging.info(photo.human_time)
+		
+		#break into lists of three
+		counter = 0
+		photos_outer = []
+		temp_list = []
+		
+		for idx,photo in enumerate(photos):
+			temp_list.append(photo)
+			
+			counter += 1
+			
+			if idx == len(photos) - 1:
+				photos_outer.append(temp_list)
+			else:			
+				if counter == 3:
+					photos_outer.append(temp_list)
+					temp_list = []
+					counter = 0
+		
+		logging.info(photos_outer)
+		
 		template_values = {
-			"photos"	:	photos
+			"photos_outer"	:	photos_outer,
+			"cameras"	:	cameras,
+			"view_all"	:	view_all
 		}
 		
 		utils.respond(self,'templates/view.html',template_values)
-		
+
 
 class ViewAllHandler(webapp2.RequestHandler):
 	def get(self):
