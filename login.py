@@ -42,7 +42,7 @@ class LoginHandler(webapp2.RequestHandler):
 		
 		else:
 			template_values = {
-				"error"		:	"Try again"
+				"error"		:	"Incorrect email/password. Please try again."
 			}
 			utils.respond(self,'templates/login.html',template_values)
 		

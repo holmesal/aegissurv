@@ -1,137 +1,21 @@
+{% extends "/templates/base.html" %}
 
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <title>Bootstrap, from Twitter</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
+{% block title %}My Cameras{% endblock %}
 
-    <!-- Le styles -->
-    <link href="../css/bootstrap.min.css" rel="stylesheet">
-    <style type="text/css">
-      body {
-        padding-top: 60px;
-        padding-bottom: 40px;
-      }
-      .sidebar-nav {
-        padding: 9px 0;
-      }
-      
-      .inner-container{
-	      background-color: #fbfbfb;
-	      width: 320px;
-	      border-radius: 5px;
-	      margin-bottom: 50px;
-	      padding-bottom: 5px;
-	      box-shadow: 0px 0px 2px #949494;
-      }
-      
-      .camimg{
-	       width:320px;
-	       height:240px;
-	       border-top-left-radius: 5px;
-	       border-top-right-radius: 5px;
-	       margin-bottom: 10px;
-      }
-      
-      .time,.cam{
-	      margin-left: 10px;
-      }
-    </style>
-    <link href="../css/bootstrap-responsive.min.css" rel="stylesheet">
-
-    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
-    <!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-
-    <!-- Fav and touch icons -->
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
-      <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
-                    <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
-                                   <link rel="shortcut icon" href="../assets/ico/favicon.png">
-  </head>
-
-  <body>
-
-    <div class="navbar navbar-inverse navbar-fixed-top">
-      <div class="navbar-inner">
-        <div class="container-fluid">
-          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </a>
-          <a class="brand" href="#">Aegis Surveillance</a>
-          <div class="nav-collapse collapse">
-            <p class="navbar-text pull-right">
-              <a href="/logout" class="navbar-link">Logout</a>
-            </p>
-            <ul class="nav">
-              <li class="active"><a href="#">My Cameras</a></li>
-              <li><a href="#about">About</a></li>
-              <li><a href="#contact">Contact</a></li>
-            </ul>
-          </div><!--/.nav-collapse -->
-        </div>
-      </div>
-    </div>
-
-    <div class="container-fluid">
-      <div class="row-fluid">
-        <div class="span3">
-          <div class="well sidebar-nav">
-            <ul class="nav nav-list">
-              <li class="nav-header">Cameras</li>
-              <li {%if view_all%}class="active"{%endif%}><a href="/view">View all</a></li>
-              {% for camera in cameras %}
-			  <li {%if camera.active%}class="active"{%endif%}><a href="/view?camera={{camera.camera_id}}">{{camera.camera_name}}</a></li>
-			  {% endfor %}
-              <li class="nav-header">Tools</li>
-              <li><a href="/link">Set an alert</a></li>
-              <li><a href="/link">Manage alerts</a></li>
-              <li class="nav-header">Account</li>
-              <li><a href="/link">Link a camera</a></li>
-              <li><a href="/password">Change password</a></li>
-            </ul>
-          </div><!--/.well -->
-        </div><!--/span-->
-        <div class="span9">
-          
-			{% for photoblock in photos_outer %}
-			<div class="row-fluid">
-				{% for photo in photoblock %}
-				<div class="span4">
-					<div class="inner-container">
-						<img class="camimg" src="/photo/{{photo.blob_key.key()}}">
-						<p class="time">{{photo.human_time}}</p>
-						<p class="cam">Camera: {{photo.parent().camera_name}}</p>
-					</div>
-				</div>
-				{% endfor %}
+{% block content %}
+	{% for photoblock in photos_outer %}
+	<div class="row-fluid">
+		{% for photo in photoblock %}
+		<div class="span4">
+			<div class="inner-container">
+				<img class="camimg" src="/photo/{{photo.blob_key.key()}}">
+				<p class="time">{{photo.human_time}}</p>
+				<p class="cam">Camera: {{photo.parent().camera_name}}</p>
 			</div>
-			{% endfor %}
-			
-        </div><!--/span-->
-      </div><!--/row-->
-
-      <hr>
-
-      <footer>
-        <p>&copy; Aegis 2012</p>
-      </footer>
-
-    </div><!--/.fluid-container-->
-
-    <!-- Le javascript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-    <script src="../js/bootstrap.min.js"></script>
-
-
-  </body>
-</html>
+		</div>
+		{% endfor %}
+	</div>
+	{%else%}
+	<div class="alert alert-info">No photos have been uploaded from this camera.</div>
+	{% endfor %}
+{% endblock %}

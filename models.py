@@ -13,6 +13,13 @@ class User(db.Model):
 	cameras = db.ListProperty(db.Key)
 	email = db.StringProperty()
 	pw = db.StringProperty()
+
+class Alert(db.Model):
+	alerttype = db.StringProperty()
+	justoncestart = db.DateTimeProperty()
+	justonceend = db.DateTimeProperty()
+	recurringstart = db.TimeProperty()
+	recurringend = db.TimeProperty()
 	
 	
 #want multiple people to be able to access cameras?

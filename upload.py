@@ -6,6 +6,7 @@ from datetime import datetime
 
 from google.appengine.ext import blobstore
 from google.appengine.ext.webapp import blobstore_handlers
+from google.appengine.api import taskqueue
 
 class GetUrlHandler(webapp2.RequestHandler):
 	def get(self):
@@ -44,6 +45,13 @@ class PostHandler(blobstore_handlers.BlobstoreUploadHandler):
 			#store photo
 			photo = models.Photo(blob_key=blob_info,timestamp=raw_time,parent=camera)
 			photo.put()
+			
+			#fire off notification task handler
+			try:
+				taskqueue.add(url='/tasks/notification', params={'camera_key': camera.key(),'string_time':string_time})
+			except Exception,e:
+				logging.error(e)
+				logging.error('Task initialization failed')
 			
 			self.response.out.write(200)
 		

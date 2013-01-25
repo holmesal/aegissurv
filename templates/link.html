@@ -1,7 +1,53 @@
-{{error}}
-{{camera_id}}
-<form method="post" action="/link">
-	<input type="text" name="camera_id" placeholder="Camera ID">
-	<input type="text" name="camera_name" placeholder="Name this camera">
-	<input type="submit">
-</form>
+{% extends "/templates/base.html" %}
+
+{% block title %}Link a camera{% endblock %}
+
+{%block style%}
+<style type="text/css">
+	#linkform{
+		text-align: center;
+	}
+	
+	input{
+		width: 300px;
+		display: block;
+	}
+	
+	#btngo{
+		display: block;
+		margin-left: auto;
+		margin-right: auto;
+		width: 200px;
+	}
+	
+	.smaller{
+		font-size: 12pt;
+	}
+	
+</style>
+{%endblock%}
+
+{% block content %}
+	<div id="linkform" class="span6 well">
+		{%if error%}
+		<div class="alert alert-danger">{{error}}</div>
+		{%endif%}
+		<form method="post" action="/link">
+			<p class="lead">Link a camera</p>
+			<p class="lead smaller">Enter the camera id from your product packaging:</p>
+			<input type="text" name="camera_id" placeholder="Camera ID" value="{{camera_id}}">
+			<p class="lead smaller">Give this camera a descriptive name:</p>
+			<input type="text" name="camera_name" placeholder="Name this camera" value="{{camera_name}}">
+			<input id="btngo" type="submit" class="btn btn-success btn-large" value="Link Camera">
+		</form>
+	</div>
+{% endblock %}
+
+{%block script%}
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$(".sidebar-nav").removeClass("active")
+			$("#linkcamera").addClass("active")
+		});
+	</script>
+{%endblock%}

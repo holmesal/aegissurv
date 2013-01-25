@@ -1,0 +1,10 @@
+To generate an ID to put in the camera's python script:
+go to /admin/generate and press the "generate button"
+
+To view photos, go to /signup
+(for now it's a simple signup page, but eventually will be a part of the purchase page)
+Enter an email and a password, and you'll be taken to the /link page, where you can link a camera.
+After you link a camera, it will show up above, under "Cameras"
+
+Everything on the "My Cameras" page is working except the "Set an Alert" and "Manage Alerts" links (that's the next milestone)
+Try creating a few different cameras, and uploading images with the different camera_ids - you'll see them show up, and be able to view photos individually or in aggregate.

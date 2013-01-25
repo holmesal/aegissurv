@@ -1,0 +1,135 @@
+{% extends "/templates/base.html" %}
+
+{% block title %}Change Password{% endblock %}
+
+{%block style%}
+<link rel="stylesheet" href="/css/bootstrap-datetimepicker.min.css">
+<style type="text/css">
+	#linkform{
+		text-align: center;
+	}
+	
+	input{
+		width: 300px;
+		display: block;
+	}
+	
+	#btngo{
+		display: block;
+		margin-left: auto;
+		margin-right: auto;
+		width: 200px;
+	}
+	
+	.smaller{
+		font-size: 12pt;
+	}
+	
+</style>
+{%endblock%}
+
+{% block content %}
+	{%if error%}
+	<div class="alert alert-danger">{{error}}</div>
+	{%endif%}
+	{%if success%}
+	<div class="alert alert-success">{{success}}</div>
+	{%endif%}
+	<div id="linkform" class="span6 well">
+		<form method="post" action="/alert/set">
+			<p class="lead">Create an email alert</p>
+			<p class="lead smaller">Alert type:</p>
+			<div class="btn-group" data-toggle="buttons-radio">
+			  <button id="justoncebtn" type="button" class="btn active">Just Once</button>
+			  <button id="recurringbtn" type="button" class="btn collapbtn">Every Day</button>
+			</div>
+			<div id="justonce" class="collapse in">
+				<div class="well">
+					<p class="lead smaller">You'll receive an email alert if motion is detected.</p>
+					<p class="lead smaller">Start date and time:</p>
+					<div id="justonce-start" class="input-append">
+						<input name="justonce-start" data-format="MM/dd/yyyy HH:mm:ss PP" type="text"></input>
+						<span class="add-on">
+						  <i data-time-icon="icon-time" data-date-icon="icon-calendar">
+						  </i>
+						</span>
+					</div>
+					<p class="lead smaller">End date and time:</p>
+					<div id="justonce-end" class="input-append">
+						<input name="justonce-end" data-format="MM/dd/yyyy HH:mm:ss PP" type="text"></input>
+						<span class="add-on">
+						  <i data-time-icon="icon-time" data-date-icon="icon-calendar">
+						  </i>
+						</span>
+					</div>
+				</div>
+			</div>
+			
+			<div id="recurring" class="collapse">
+				<div class="well">
+					<p class="lead smaller">You'll receive an email alert if motion is detected.</p>
+					<p class="lead smaller">Start time:</p>
+					<div id="recurring-start" class="input-append">
+						<input name="recurring-start" data-format="HH:mm:ss PP" type="text"></input>
+						<span class="add-on">
+						  <i data-time-icon="icon-time" data-date-icon="icon-calendar">
+						  </i>
+						</span>
+					</div>
+					<p class="lead smaller">End time:</p>
+					<div id="recurring-end" class="input-append">
+						<input name="recurring-end" data-format="HH:mm:ss PP" type="text"></input>
+						<span class="add-on">
+						  <i data-time-icon="icon-time" data-date-icon="icon-calendar">
+						  </i>
+						</span>
+					</div>
+				</div>
+			</div>
+			<input id="btngo" type="submit" class="btn btn-success btn-large" value="Create alert">
+			<input type="hidden" id="alerttype" name="alerttype" value="justonce">
+			
+		</form>
+	</div>
+{% endblock %}
+
+{%block script%}
+<script type="text/javascript" src="/js/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$(".sidebar-nav").removeClass("active")
+		$("#setalert").addClass("active")
+		
+		//init collapse
+		$("#justonce").collapse({
+			toggle	:	false
+		})
+		//init collapse toggle
+		$("#justoncebtn").click(function(){
+			$("#recurring").collapse('hide')
+			$("#justonce").collapse('show')
+			$("#alerttype").val("justonce")
+		})
+		
+		$("#recurringbtn").click(function(){
+			$("#recurring").collapse('show')
+			$("#justonce").collapse('hide')
+			$("#alerttype").val("recurring")
+		})
+		
+		//init datetime pickers
+		$('#justonce-start,#justonce-end').datetimepicker({
+			language: 'en',
+			pick12HourFormat: true
+		});
+		
+		$('#recurring-start,#recurring-end').datetimepicker({
+			language: 'en',
+			pick12HourFormat: true,
+			pickDate: false
+		});
+		
+		
+	});
+</script>
+{%endblock%}

@@ -1,31 +1,41 @@
 from datetime import datetime
-from google.appengine.api import urlfetch
 from google.appengine.ext import db
-import base64
-import json
 import logging
-import urllib
 import webapp2
 
-class EmailTaskHandler(webapp2.RequestHandler):
+from google.appengine.api import mail
+
+import models
+
+class NotificationHandler(webapp2.RequestHandler):
 	def post(self):
-		# try:
+			
+		logging.info('''
+			
+			EMAIL ALERT CHECK TASK RUNNING
+			
+			''')
+
+		camera_key = db.Key(self.request.get('camera_key'))
+		string_time = self.request.get('string_time')
+		
+		owners = models.User.gql("WHERE cameras=:1",camera_key).fetch(None)
+		logging.info(owners)
+		
+		timestamp = datetime.strptime(string_time,"%Y%m%d-%H%M%S")
+		logging.info(repr(timestamp))
+		
+		
+		
+		# for owner in owners:
+# 			message = mail.EmailMessage(sender="Aegis Surveillance <connorkingman@aegissurveillance.com>", subject="Movement detected")
+# 			message.to = owner.email
+# 			message.body = """
+# 				Motion detected
+# 			"""
 # 			
-# 			logging.info('''
-# 				
-# 				EMAIL ALERT CHECK TASK RUNNING
-# 				
-# 				''')
-# 			
-# 			payload = json.loads(self.request.body)
-# 			logging.info(payload['artist_name'])
-# 			
-# 			
-# 			
-# 		except:
-# 			logging.debug('Ah man this failed')
-		pass
+# 			message.send()
 
 			
-app = webapp2.WSGIApplication([('/tasks/emailTask', EmailTaskHandler)
+app = webapp2.WSGIApplication([('/tasks/notification', NotificationHandler)
 								],debug=True)

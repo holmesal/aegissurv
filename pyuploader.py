@@ -17,7 +17,7 @@ from datetime import datetime
 
 
 #PARAMETERS
-camera_id = 'alonso9'
+camera_id = 'a669c25516a6ee746d22'
 file_end = 'jpg'	#file ending. Do not include the .
 dir = './'			#relative path from python script to image file
 					#"./" = same folder
@@ -26,7 +26,7 @@ dir = './'			#relative path from python script to image file
 					#etc
 					
 #LOCAL VS LIVE
-#base_url = 'http://aegissurv.appspot.com'
+# base_url = 'http://aegissurv.appspot.com'
 base_url = 'http://localhost:8096'
 
 

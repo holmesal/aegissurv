@@ -15,26 +15,39 @@ class ViewHandler(webapp2.RequestHandler):
 		utils.session_bounce(self)
 		
 		specific = self.request.get('camera',None)
+		if specific:
+			view_all = False
+		else:
+			view_all = True
 		
 		#grab session
 		session = get_current_session()
-		camera_keys = session.get("cameras")
+		camera_keys = session.get("cameras",[])
 		cameras = db.get(camera_keys)
+		
+		logging.info(session)
+		logging.info(cameras)
 		
 		#get photos
 		photos = []
 		for camera in cameras:
 			
+			logging.info(camera)
+			
 			if specific:
-				view_all = False
 				if camera.camera_id == specific:
+					try:
+						pc = models.Photo.gql('WHERE ANCESTOR IS :1',camera).fetch(None)
+						photos.extend(pc)
+						camera.active = True
+					except Exception, e:
+						logging.error(e)
+			else:
+				try:
 					pc = models.Photo.gql('WHERE ANCESTOR IS :1',camera).fetch(None)
 					photos.extend(pc)
-					camera.active = True
-			else:
-				view_all = True
-				pc = models.Photo.gql('WHERE ANCESTOR IS :1',camera).fetch(None)
-				photos.extend(pc)
+				except Exception, e:
+					logging.error(e)
 		
 		#sort by date
 		photos.sort(key = lambda x: x.timestamp)

@@ -11,9 +11,18 @@ from gaesessions import get_current_session
 class LinkHandler(webapp2.RequestHandler):
 	def get(self):
 		
+		utils.session_bounce(self)
+		
+		#grab session
+		session = get_current_session()
+		camera_keys = session.get("cameras",[])
+		cameras = db.get(camera_keys)
+		
 		logging.info(get_current_session())
 		
-		template_values = {}
+		template_values = {
+			"cameras"	:	cameras
+		}
 		utils.respond(self,'templates/link.html',template_values)
 		
 	
@@ -52,7 +61,7 @@ class LinkHandler(webapp2.RequestHandler):
 			session['cameras'] = list(set(s_cameras))
 			session.save()
 			
-			self.redirect('/manage')
+			self.redirect('/view?camera='+camera_id)
 		
 
 
