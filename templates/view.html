@@ -2,7 +2,21 @@
 
 {% block title %}My Cameras{% endblock %}
 
+{% block style %}
+<style type="text/css">
+	.paginate{
+		text-align: center;
+	}
+	
+	.showing{
+		margin-left: 20px;
+		margin-right: 20px;
+	}
+</style>
+{% endblock %}
+
 {% block content %}
+	<div class="outerrr">
 	{% for photoblock in photos_outer %}
 	<div class="row-fluid">
 		{% for photo in photoblock %}
@@ -20,20 +34,98 @@
 	{% endfor %}
 	<div class="paginate">
 		{% if newer %}
-		<a href="{{newer}}">Newer</a>
+		<a class="lead" href="{{newer}}">Newer</a>
 		{% endif %}
-		<span>{{offset+1}} - {{offset+30}}
+		{%if photos_outer%}<span class="showing lead">{{offset+1}} - {{offset+30}}</span>{% endif %}
 		{% if older %}
-		<a href="{{older}}">Older</a>
+		<a class="lead" href="{{older}}">Older</a>
 		{% endif %}
+	</div>
+	<button id="grow">GROW</button>
 	</div>
 {% endblock %}
 
 {% block script %}
 <script src="js/jquery.lazyload.min.js" type="text/javascript"></script>
 <script type="text/javascript">
-	$("img.camimg").lazyload({ 
-	    effect : "fadeIn"
+	$(document).on("ready",function(){
+		
+		//variables for ajax request
+		camera_keys = {{camera_keys}}
+		offset = {{offset|default(0)}}+30
+		{% if older %}end=false{%else%}end=true{%endif%}
+		
+		$("img.camimg").lazyload({ 
+		    effect : "fadeIn"
+		});
+		
+		$("#grow").click(function(){
+			loadmore()
+		})
+		
+		//scroll listener
+		$(window).scroll(function(){
+	        if  ($(window).scrollTop() == $(document).height() - $(window).height()){
+	           loadmore();
+	        }
 	});
+		
+		loadmore = function(){
+			tosend = {
+				camera_keys	:	camera_keys,
+				offset		:	offset
+			}
+/*
+			
+			console.log(JSON.stringify(tosend))
+			
+			
+			$.getJSON('/view/ajax',tosend,function(data){
+				console.log(data)
+			})
+*/
+			
+			if (end == false){
+			
+				jQuery.ajax({
+				    type: 'GET',
+				    url: "/view/ajax",
+				    data: JSON.stringify(tosend),
+				    dataType: "json",
+				    success: function(data){
+				    	console.log(data.photos_outer)
+					    console.log(data)
+					    
+					    end = data.end
+					    offset = data.offset
+					    
+					    $(data.photos_outer).each(function(i,photoblock){
+						    starthtml = '<div class="row-fluid">'
+						    endhtml = '</div>'
+						    midhtml = ''
+						    $(photoblock).each(function(i,photo){
+							    innerhtml = '<div class="span4"><div class="inner-container"><img class="camimg offset'+offset+'" src="/img/gray.jpg" data-original="/photo/'+photo.blob_key+'"><p class="time">'+photo.human_time+'</p><p class="cam">Camera: '+photo.camera+'</p></div></div>'
+							    midhtml += innerhtml
+						    })
+							
+							console.log(starthtml+midhtml+endhtml)					    
+						    $(".outerrr").append(starthtml+midhtml+endhtml)
+						    
+/*
+						    $("img.offset"+offset).lazyload({ 
+							    effect : "fadeIn"
+							});
+*/
+		
+					    })
+					    
+				    }
+				});
+			}
+		
+		}
+	})
+	
+	
 </script>
 {% endblock %}
