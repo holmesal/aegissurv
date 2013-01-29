@@ -36,8 +36,8 @@ handlers:
   script: view.app
 - url: /photo.*
   script: photo.app
-- url: /signup
-  script: signup.app
+# - url: /signup
+#   script: signup.app
 - url: /link
   script: link.app
 - url: /login
@@ -48,6 +48,10 @@ handlers:
   script: password.app
 - url: /alert.*
   script: alert.app
+- url: /purchase.*
+  script: purchase.app
+- url: /closeaccount
+  script: closeaccount.app
   
 - url: /admin.*
   script: admin.app

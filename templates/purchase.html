@@ -1,0 +1,444 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>{%block title%}{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le styles -->
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <style type="text/css">
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+      }
+      #outercontainer{
+	      margin-left: auto !important;
+	      margin-right: auto !important;
+	      float: none;
+      }
+    </style>
+    {%block style%}
+    {%endblock%}
+<!--     <link href="../css/bootstrap-responsive.min.css" rel="stylesheet"> -->
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Fav and touch icons -->
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
+      <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
+                    <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
+                                   <link rel="shortcut icon" href="../assets/ico/favicon.png">
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="/">Aegis Surveillance</a>
+          <div class="nav-collapse collapse">
+            <p class="navbar-text pull-right">
+              {% if loggedin %}
+              <a href="/logout" class="navbar-link">Logout</a>
+              {% else %}
+              <a href="/login" class="navbar-link">Login</a>
+              {% endif %}
+            </p>
+            <ul class="nav">
+              <li><a href="/view">My Cameras</a></li>
+              <li class="active"><a href="/purchase">Purchase Cameras</a></li>
+              <li><a href="/about">About</a></li>
+              <li><a href="/contact">Contact</a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div id="outercontainer" class="span9">
+	        <form class="well" id="purchaseform" method="post" action="purchase">
+	        
+	        		{% if thanks %}
+	        		<h3>Thank you.</h3>
+	        		<p class="lead">You'll receive an email at <strong>{{email}}</strong> with tracking information when your order ships.</p>
+	        		{% else %}
+		        	
+		        	{% if loggedin == False %}
+			        <legend>Create an account</legend>
+			        <div class="span4">
+				        <label>Email:</label>
+				        <div id="emailalert" class="alert alert-danger" hidden></div>
+				        <input type="text" placeholder="Email address" id="email" name="email" value="{{email}}">
+				        <label>Choose your time zone:</label>
+				        <div id="tzalert" class="alert alert-danger" hidden></div>
+				        <select name="tz" id="tz">
+	<!-- 				        <option>ST</option> -->
+	<!-- 				        <option>HAT</option> -->
+							<option value="" selected="selected">Select a Time Zone</option> 
+					        <option value="AKT">AKT</option>
+					        <option value="PT">PT</option>
+					        <option value="MT">MT</option>
+					        <option value="CT">CT</option>
+					        <option value="ET">ET</option>
+	<!-- 				        <option>ST</option> -->
+				        </select>
+			        </div>
+			        <div class="span4">
+				        <label>Choose a password:</label>
+				        <div id="pwalert" class="alert alert-danger" hidden></div>
+				        <input type="password" placeholder="Enter password" name="pw1" id="pw1" value="{{pw1}}">
+				        <label>Confirm password:</label>
+				        <input type="password" placeholder="Enter password again" name="pw2" id="pw2" value="{{pw2}}">
+			        </div>
+			        
+			        {% endif %}
+		        
+		        
+		        <legend>Shipping Address</legend>
+		        
+		        <div class="span4">
+		        	<div id="shippingalert" class="alert alert-danger" hidden></div>
+			        <input type="text" placeholder="Full Name" name="name" id="name" value="{{name}}">
+			        <input type="text" placeholder="Address Line 1" name="addr1" id="addr1" value="{{addr1}}">
+			        <input type="text" placeholder="Address Line 2" name="addr2" id="addr2" value="{{addr2}}">
+		        </div>
+		        
+		        <div class="span4">
+		        	<div id="shippingalert2" class="alert alert-danger" hidden></div>
+			        <input type="text" placeholder="City" name="city" id="city" value="{{city}}">
+			        <select id="state" name="state"> 
+						<option value="" selected="selected">Select a State</option> 
+						<option value="AL">Alabama</option> 
+						<option value="AK">Alaska</option> 
+						<option value="AZ">Arizona</option> 
+						<option value="AR">Arkansas</option> 
+						<option value="CA">California</option> 
+						<option value="CO">Colorado</option> 
+						<option value="CT">Connecticut</option> 
+						<option value="DE">Delaware</option> 
+						<option value="DC">District Of Columbia</option> 
+						<option value="FL">Florida</option> 
+						<option value="GA">Georgia</option> 
+						<option value="HI">Hawaii</option> 
+						<option value="ID">Idaho</option> 
+						<option value="IL">Illinois</option> 
+						<option value="IN">Indiana</option> 
+						<option value="IA">Iowa</option> 
+						<option value="KS">Kansas</option> 
+						<option value="KY">Kentucky</option> 
+						<option value="LA">Louisiana</option> 
+						<option value="ME">Maine</option> 
+						<option value="MD">Maryland</option> 
+						<option value="MA">Massachusetts</option> 
+						<option value="MI">Michigan</option> 
+						<option value="MN">Minnesota</option> 
+						<option value="MS">Mississippi</option> 
+						<option value="MO">Missouri</option> 
+						<option value="MT">Montana</option> 
+						<option value="NE">Nebraska</option> 
+						<option value="NV">Nevada</option> 
+						<option value="NH">New Hampshire</option> 
+						<option value="NJ">New Jersey</option> 
+						<option value="NM">New Mexico</option> 
+						<option value="NY">New York</option> 
+						<option value="NC">North Carolina</option> 
+						<option value="ND">North Dakota</option> 
+						<option value="OH">Ohio</option> 
+						<option value="OK">Oklahoma</option> 
+						<option value="OR">Oregon</option> 
+						<option value="PA">Pennsylvania</option> 
+						<option value="RI">Rhode Island</option> 
+						<option value="SC">South Carolina</option> 
+						<option value="SD">South Dakota</option> 
+						<option value="TN">Tennessee</option> 
+						<option value="TX">Texas</option> 
+						<option value="UT">Utah</option> 
+						<option value="VT">Vermont</option> 
+						<option value="VA">Virginia</option> 
+						<option value="WA">Washington</option> 
+						<option value="WV">West Virginia</option> 
+						<option value="WI">Wisconsin</option> 
+						<option value="WY">Wyoming</option>
+					</select>
+					<label>This product is only available in the United States.</label>
+		        </div>
+		        
+		        <input type="hidden" name="stripe_token" id="stripe_token">
+		        <input type="hidden" name="amount" id="amount">
+		        
+		        <legend>Checkout</legend>
+		        <div class="span4">
+			        <label>Number of cameras:</label>
+			        <input type="number" name="numcams" id="numcams" value="{{numcams|default(1)}}" min="1" step="1" max="10">
+			        <label>Monthly cost:</label>
+			        <label><p class="lead" id="monthlycost">$20.00</p></label>
+			        <label>Billed monthly.</br>Your first month is free.</label>
+		        </div>
+		        <div class="span4">
+		        	<label>Camera cost:</label>
+			        <label><p class="lead" id="camcost">$249.00</p></label>
+			        
+			        <label>Shipping and Handling:</label>
+			        <label><p class="lead">$10.00</p></label>
+			        
+			        <label><strong>Total:</strong></label>
+			        <label><p class="lead"><strong id="total">$259.00</strong></p></label>
+			        
+			        <button id="purchase" class="btn btn-success btn-large">Purchase</button>
+		        </div>
+		        
+		        <div style="clear:both;"></div>
+		        
+		        {% if carderror %}
+	        	<div class="alert alert-danger" style="margin-top: 10px;"><p class="lead" style="text-align:center;"><strong>There was a problem processing your card.</strong></br>{{carderror}}. You have not been charged. Please try again.</p></div>
+	        	{% endif %}
+		        
+		        {% endif %}
+
+		        
+	        </form>
+        </div>
+      </div><!--/row-->
+
+      <hr>
+
+      <footer>
+        <p>&copy; Aegis 2012</p>
+      </footer>
+
+    </div><!--/.fluid-container-->
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.js"></script>
+    <script src="https://checkout.stripe.com/v2/checkout.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    
+    <script type="text/javascript">
+    
+    	filternums = function(){
+	    	$("#numcams").keydown(function(event) {
+		        // Allow: backspace, delete, tab, escape, and enter
+		        if ( event.keyCode == 46 || event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 27 || event.keyCode == 13 || 
+		             // Allow: Ctrl+A
+		            (event.keyCode == 65 && event.ctrlKey === true) || 
+		             // Allow: home, end, left, right
+		            (event.keyCode >= 35 && event.keyCode <= 39)) {
+		                 // let it happen, don't do anything
+		                 return;
+		        }
+		        else {
+		            // Ensure that it is a number and stop the keypress
+		            if (event.shiftKey || (event.keyCode < 48 || event.keyCode > 57) && (event.keyCode < 96 || event.keyCode > 105 )) {
+		                event.preventDefault(); 
+		            }   
+		        }
+		    });
+    	}
+    
+    	updatetotal = function(){
+	    	numcams = $("#numcams").val()
+	    	
+	    	camcost = numcams * cameracost
+	    	
+	    	monthly = 20 + 15*(numcams-1)
+	    	
+	    	total = camcost+ shippingcost
+	    	
+	    	$("#monthlycost").text("$"+monthly+".00")
+	    	$("#camcost").text("$"+camcost+".00")
+	    	$("#total").text("$"+total+".00")
+	    	
+	    	$("#amount").val(total*100)
+    	}
+    	
+    	checkemail = function(){
+	    	$.getJSON('/purchase/checkemail',{email:$("#email").val()},function(result){
+		    	if (result.error == "invalid"){
+			    	$("#emailalert").text("Please enter a valid email address")
+			    	$("#emailalert").show(400)
+			    	return false
+			    } else if (result.error == "existing"){
+			    	$("#emailalert").html("That email address is already taken. If you are the owner, please <a href='/login'>Log In.</a>")
+			    	$("#emailalert").show(400)
+			    	return false
+		    	} else{
+			    	$("#emailalert").hide(400)
+			    	return true
+		    	}
+	    	})
+    	}
+    	
+    	validate = function(){
+	    	
+	    	valid = true
+	    	
+	    	if (loggedin == false){
+		    	//block to validate fields for new users
+		    	
+		    	if (checkemail == false){
+			    	valid = false
+		    	}
+		    	
+		    	//info
+		    	if ($("#tz").val() == ''){
+			    	valid = false
+			    	$("#tzalert").text("Please select a time zone.")
+			    	$("#tzalert").show(400)
+		    	} else{
+			    	$("#tzalert").hide()
+		    	}
+		    	
+		    	//pwd
+		    	if ($("#pw1").val() != $("#pw2").val()){
+			    	valid = false
+			    	$("#pwalert").text("Passwords do not match. Please try again")
+			    	$("#pw1,#pw2").empty()
+			    	$("#pwalert").show(400)
+		    	} else if ($("#pw1").val().length < 6){
+		    		valid = false
+			    	$("#pwalert").text("Please enter a password at least 6 characters long")
+			    	$("#pwalert").show(400)
+		    	} else{
+			    	$("#pwalert").hide()
+		    	}
+		    }
+		    
+		    //this validates for all users
+		    	
+		    	//shipping1
+		    	if ($("#name").val().length == 0){
+			    	valid = false
+			    	$("#shippingalert").text("Please enter your name")
+			    	$("#shippingalert").show(400)
+		    	} else if ($("#addr1").val() == ""){
+		    		valid = false
+		    		$("#shippingalert").text("Please enter your address")
+			    	$("#shippingalert").show(400)
+			    } else{
+			    	$("#shippingalert").hide()
+		    	}
+		    	
+		    	//shipping2
+		    	
+		    	if ($("#city").val().length == 0){
+			    	valid = false
+			    	$("#shippingalert2").text("Please enter a city")
+			    	$("#shippingalert2").show(400)
+		    	} else if ($("#state").val() == ""){
+		    		valid = false
+		    		$("#shippingalert2").text("Please select a state")
+			    	$("#shippingalert2").show(400)
+			    } else{
+			    	$("#shippingalert2").hide()
+		    	}
+		    	
+		    	console.log($("#state").val())
+		    	
+		    	if ($("#state").val() == 0){
+			    	valid = false
+			    	$("#cityalert").show(400)
+		    	} else{
+			    	$("#cityalert").hide()
+		    	}
+		    	
+		    	
+		    return valid	
+		    	
+	    	}
+	    	
+	    	
+	    	
+    	
+    	setpickers = function(){
+	    	$("#tz").val('{{tz|default("")}}')
+	    	$("#state").val('{{state|default("")}}')
+    	}
+	    
+	    $(document).on('ready',function(){
+	    	
+	    	//template hook for loggedin state
+	    	{% if loggedin == True %}
+	    	loggedin = true
+	    	{% else %}
+	    	loggedin = false
+	    	{% endif %}
+	    	
+	    	
+	    	//only allow integer inputs
+	    	filternums()
+	    	
+	    	//set select elements
+	    	setpickers()
+		    
+		    cameracost = 249
+		    shippingcost = 10
+		    updatetotal()
+		    
+		    //register change listener for camera amount button
+		    $("#numcams").change(function(){
+			    updatetotal()
+		    })
+		    
+		    //register change listener for email button
+		    $("#email").change(function(){
+			    checkemail()
+		    })
+		    
+		    //register purchase button listener
+
+		    $('#purchase').click(function(){
+		      var token = function(res){
+		        console.log('Got token ID:', res.id);
+		        console.log(res)
+		        $("#stripe_token").val(res.id)
+		        
+		        $("#purchase").attr("disabled","disabled")
+		        $("#purchase").text("Processing...")
+		        
+		        $("#purchaseform").submit()
+		      };
+		      
+/* 		      if (validate()){ */
+			  if (validate() == true){
+		
+		      StripeCheckout.open({
+		        key:         'pk_test_KKk1lywUYw2elKoRW25xZgjl',
+		        address:     false,
+		        amount:      total*100,
+		        name:        'Aegis Surveillance',
+		        description: 'Camera purchase. You will be billed monthly for your subscription, after the first month.',
+		        panelLabel:  'Checkout',
+		        token:       token
+		      });
+		
+		      
+		      
+		      }
+		      
+		      return false;
+		    });
+		    
+	    });
+	    
+    </script>
+
+
+  </body>
+</html>

@@ -15,6 +15,7 @@ class ViewHandler(webapp2.RequestHandler):
 		utils.session_bounce(self)
 		
 		specific = self.request.get('camera',None)
+		offset = int(self.request.get('offset',0))
 		if specific:
 			view_all = False
 		else:
@@ -37,21 +38,21 @@ class ViewHandler(webapp2.RequestHandler):
 			if specific:
 				if camera.camera_id == specific:
 					try:
-						pc = models.Photo.gql('WHERE ANCESTOR IS :1',camera).fetch(None)
+						pc = models.Photo.gql('WHERE ANCESTOR IS :1 ORDER BY timestamp DESC',camera).fetch(30,offset)
 						photos.extend(pc)
 						camera.active = True
 					except Exception, e:
 						logging.error(e)
 			else:
 				try:
-					pc = models.Photo.gql('WHERE ANCESTOR IS :1',camera).fetch(None)
+					pc = models.Photo.gql('WHERE ANCESTOR IS :1 ORDER BY timestamp DESC',camera).fetch(30,offset)
 					photos.extend(pc)
 				except Exception, e:
 					logging.error(e)
 		
 		#sort by date
-		photos.sort(key = lambda x: x.timestamp)
-		photos.reverse()
+		# photos.sort(key = lambda x: x.timestamp)
+# 		photos.reverse()
 		
 		#readable datetime
 		for photo in photos:
@@ -78,10 +79,30 @@ class ViewHandler(webapp2.RequestHandler):
 		
 		logging.info(photos_outer)
 		
+		if len(photos) < 30:
+			older = None
+		else:
+			if specific:
+				older = "/view?camera="+specific+"&offset="+str(offset+30)
+			else:
+				older = "/view?offset="+str(offset+30)
+		
+		if offset == 0:
+			newer = None
+		else:
+			if specific:
+				newer = "/view?camera="+specific+"&offset="+str(offset-30)
+			else:
+				newer = "/view?offset="+str(offset-30)
+		
 		template_values = {
 			"photos_outer"	:	photos_outer,
 			"cameras"	:	cameras,
-			"view_all"	:	view_all
+			"view_all"	:	view_all,
+			"offset"	:	offset,
+			"older"		:	older,
+			"newer"		:	newer,
+			"specific"	:	specific
 		}
 		
 		utils.respond(self,'templates/view.html',template_values)

@@ -18,6 +18,7 @@
       }
       .container {
         width: 300px;
+        margin-top: 150px;
       }
 
       /* The white background content wrapper */
@@ -42,16 +43,45 @@
 		font-weight: bold;
 	  	color: #404040;
 	  }
+	  
+	  .forgot{
+		  margin-top: 10px;
+	  }
 
     </style>
 
 </head>
 <body>
+	
+	<div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="/">Aegis Surveillance</a>
+          <div class="nav-collapse collapse">
+            <p class="navbar-text pull-right">
+              <a href="/login" class="navbar-link">Login</a>
+            </p>
+            <ul class="nav">
+              <li><a href="/view">My Cameras</a></li>
+              <li><a href="/purchase">Purchase Cameras</a></li>
+              <li><a href="/about">About</a></li>
+              <li><a href="/contact">Contact</a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+	
 	<div class="container">
 		<div class="content">
 			{% if error %}
-					<div class="alert alert-danger">{{error}}</div>
-					{%endif%}
+				<div class="alert alert-danger">{{error}}</div>
+			{%endif%}
 			<div class="row">
 				<div class="login-form">
 					
@@ -62,9 +92,10 @@
 								<input type="text" placeholder="Email" name="email" value="{{email}}">
 							</div>
 							<div class="clearfix">
-								<input type="password" placeholder="Password" name="pw" value="{{pw}}">
+								<input type="password" placeholder="Password" name="pw">
 							</div>
 							<button class="btn btn-primary" type="submit">Sign in</button>
+							<p class="forgot"><a id="forgotpw">Forgot password</a></p>
 						</fieldset>
 					</form>
 				</div>

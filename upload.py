@@ -48,7 +48,7 @@ class PostHandler(blobstore_handlers.BlobstoreUploadHandler):
 			
 			#fire off notification task handler
 			try:
-				taskqueue.add(url='/tasks/notification', params={'camera_key': camera.key(),'string_time':string_time})
+				taskqueue.add(url='/tasks/notification', params={'camera_key': camera.key(),'string_time':string_time,'blob_key':blob_info.key()})
 			except Exception,e:
 				logging.error(e)
 				logging.error('Task initialization failed')

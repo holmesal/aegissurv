@@ -14,15 +14,15 @@ class AddAlertHandler(webapp2.RequestHandler):
 		
 		utils.session_bounce(self)
 		
-		#grab session
-# 		session = get_current_session()
-# 		camera_keys = session.get("cameras")
-# 		cameras = db.get(camera_keys)
-# 		
-# 		logging.info(get_current_session())
+# 		grab session
+		session = get_current_session()
+		camera_keys = session.get("cameras")
+		cameras = db.get(camera_keys)
+		
+		logging.info(get_current_session())
 		
 		template_values = {
-			
+			"cameras"		:cameras
 		}
 		utils.respond(self,'templates/addalert.html',template_values)
 		
@@ -34,6 +34,7 @@ class AddAlertHandler(webapp2.RequestHandler):
 		
 		#get current user
 		session = get_current_session()
+		
 		user = session['user']
 		
 		if alerttype == 'justonce':
@@ -75,8 +76,49 @@ class AddAlertHandler(webapp2.RequestHandler):
 			
 			#make alert
 			alert = models.Alert(alerttype=alerttype,recurringstart=start,recurringend=end,parent=user).put()
+		
+		self.redirect('/alert/manage')
 
-class ManageAlertHandler:
+class ManageAlertHandler(webapp2.RequestHandler):
+	def get(self):
+		
+		utils.session_bounce(self)
+		
+		#get current user
+		session = get_current_session()
+		camera_keys = session.get("cameras")
+		cameras = db.get(camera_keys)
+		user = session['user']
+		
+		#get all alerts
+		alerts = models.Alert.gql('WHERE ANCESTOR IS :1',user).fetch(None)
+		logging.info(alerts)
+		
+		#segregate
+		justonce = []
+		recurring = []
+		for alert in alerts:
+			if alert.alerttype == 'justonce':
+				alert.stringstart = alert.justoncestart.strftime("%m/%d/%Y %I:%M:%S %p")
+				alert.stringend = alert.justonceend.strftime("%m/%d/%Y %I:%M:%S %p")
+				justonce.append(alert)
+			elif alert.alerttype == 'recurring':
+				alert.stringstart = alert.recurringstart.strftime("%I:%M:%S %p")
+				alert.stringend = alert.recurringend.strftime("%I:%M:%S %p")
+				recurring.append(alert)
+		
+		logging.info(justonce)
+		logging.info(recurring)
+		
+		template_values = {
+			"justonce"		:	justonce,
+			"recurring"		:	recurring,
+			"cameras"		:	cameras
+		}
+		
+		utils.respond(self,'templates/managealert.html',template_values)
+		
+class RemoveAlertHandler(webapp2.RequestHandler):
 	def get(self):
 		
 		utils.session_bounce(self)
@@ -85,12 +127,20 @@ class ManageAlertHandler:
 		session = get_current_session()
 		user = session['user']
 		
-		#get all alerts
-		alerts = models.Alert.gql('WHERE ANCESTOR IS :1',user).fetch(None)
-		logging.info(alerts)
+		#get requested alert
+		alertdel = self.request.get('alert')
+		
+		#find requested alert
+		alert = db.get(alertdel)
+		logging.info(alert)
+		if alert.key().parent() == user:
+			alert.delete()
+		
+		self.redirect('/alert/manage')
 
 
 app = webapp2.WSGIApplication([
 	('/alert/set',AddAlertHandler),
-	('/alert/manage',ManageAlertHandler)
+	('/alert/manage',ManageAlertHandler),
+	('/alert/remove',RemoveAlertHandler)
 ],debug=True)

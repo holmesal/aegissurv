@@ -17,7 +17,7 @@ from datetime import datetime
 
 
 #PARAMETERS
-camera_id = 'a669c25516a6ee746d22'
+camera_id = '2f8ef4e4eba722a38c2d'   #camera_id from /admin/newcamera
 file_end = 'jpg'	#file ending. Do not include the .
 dir = './'			#relative path from python script to image file
 					#"./" = same folder
@@ -32,11 +32,6 @@ base_url = 'http://localhost:8096'
 
 
 
-
-
-###DO NOT CHANGE###
-token = '3g6cz8IoZ2OOhFhkZQVCJgsEtgFZVxMe'		#Don't change this - it's hardcoded on both the python and server sides
-###DO NOT CHANGE###
 
 
 
@@ -117,6 +112,11 @@ def post_image(upload_url,filename,time):
 		print('Image was deleted after 5 failed attempts to post')
 		return False
 
+
+
+###DO NOT CHANGE###
+token = '3g6cz8IoZ2OOhFhkZQVCJgsEtgFZVxMe'		#Don't change this - it's hardcoded on both the python and server sides
+###DO NOT CHANGE###
 
 #find files and post
 findfiles()

@@ -1,0 +1,4 @@
+cron:
+- description: old photo and alert deletion
+  url: /tasks/deleteold
+  schedule: every day 00:00

@@ -1,0 +1,47 @@
+{% extends "/templates/base.html" %}
+
+{% block title %}Close Account{% endblock %}
+
+{%block style%}
+<style type="text/css">
+	#linkform{
+		text-align: center;
+	}
+	
+	input{
+		width: 300px;
+		display: block;
+	}
+	
+	#btngo{
+		display: block;
+		margin-left: auto;
+		margin-right: auto;
+		width: 200px;
+	}
+	
+	.smaller{
+		font-size: 12pt;
+	}
+	
+</style>
+{%endblock%}
+
+{% block content %}
+	<div id="linkform" class="span6 well">
+		<form method="post" action="/closeaccount">
+			<p class="lead">Close your account</p>
+			<div class="alert alert-danger"><p class="lead smaller">You will lose your existing photos, and will not be able to view your cameras.</p></div>
+			<input type="submit" value="Close Account" class="btn btn-danger">
+		</form>
+	</div>
+{% endblock %}
+
+{%block script%}
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$(".sidebar-nav").removeClass("active")
+			$("#closeaccount").addClass("active")
+		});
+	</script>
+{%endblock%}
