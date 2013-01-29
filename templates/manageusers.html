@@ -1,0 +1,29 @@
+{% extends "/templates/base.html" %}
+
+{% block title %}Manage Alerts{% endblock %}
+
+{%block style%}
+{%endblock%}
+
+{% block content %}
+    <div class="outerrr">
+        {% for photoblock in photos_outer %}
+        <div class="row-fluid">
+            {% for photo in photoblock %}
+            <div class="span4">
+                <div class="inner-container">
+                    <img class="camimg" src="/img/gray.jpg" data-original="/photo/{{photo.blob_key.key()}}">
+                    <p class="time">{{photo.human_time}}</p>
+                    <p class="cam">Camera: {{photo.parent().camera_name}}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {%else%}
+        <div class="alert alert-info">No photos have been uploaded from this camera.</div>
+        {% endfor %}
+    </div>
+{% endblock %}
+
+{%block script%}
+{%endblock%}

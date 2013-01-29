@@ -25,3 +25,9 @@ indexes:
   properties:
   - name: timestamp
     direction: desc
+
+- kind: User
+  properties:
+  - name: name
+  - name: camsbought
+  - name: email
