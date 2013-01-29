@@ -81,7 +81,7 @@ class NotificationHandler(webapp2.RequestHandler):
 				blob_key = self.request.get('blob_key')
 				logging.info(blob_key)
 				#send email
-				message = mail.EmailMessage(sender="Aegis Surveillance <connorkingman@aegissurveillance.com>", subject="Movement detected")
+				message = mail.EmailMessage(sender="Aegis Surveillance <alerts@aegissurveillance.com>", subject="Movement detected")
 				message.to = owner.email
 				message.body = 'Motion detected on camera "' + camera_name + '".'
 				message.html = '<h3>Motion detected on camera "' + camera_name + '".</h3>'

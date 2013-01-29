@@ -32,6 +32,7 @@
 	{%else%}
 	<div class="alert alert-info">No photos have been uploaded from this camera.</div>
 	{% endfor %}
+<!--
 	<div class="paginate">
 		{% if newer %}
 		<a class="lead" href="{{newer}}">Newer</a>
@@ -41,7 +42,8 @@
 		<a class="lead" href="{{older}}">Older</a>
 		{% endif %}
 	</div>
-	<button id="grow">GROW</button>
+-->
+<!-- 	<button id="grow">GROW</button> -->
 	</div>
 {% endblock %}
 
@@ -55,8 +57,11 @@
 		offset = {{offset|default(0)}}+30
 		{% if older %}end=false{%else%}end=true{%endif%}
 		
+		loading = false
+		
 		$("img.camimg").lazyload({ 
-		    effect : "fadeIn"
+		    effect : "fadeIn",
+		    threshold:	600
 		});
 		
 		$("#grow").click(function(){
@@ -65,8 +70,10 @@
 		
 		//scroll listener
 		$(window).scroll(function(){
-	        if  ($(window).scrollTop() == $(document).height() - $(window).height()){
-	           loadmore();
+	        if  ($(window).scrollTop() > $(document).height() - $(window).height() - 800){
+	        	if (loading == false){
+	        		loadmore();
+		        }
 	        }
 	});
 		
@@ -86,6 +93,8 @@
 */
 			
 			if (end == false){
+				
+				loading = true
 			
 				jQuery.ajax({
 				    type: 'GET',
@@ -104,18 +113,19 @@
 						    endhtml = '</div>'
 						    midhtml = ''
 						    $(photoblock).each(function(i,photo){
-							    innerhtml = '<div class="span4"><div class="inner-container"><img class="camimg offset'+offset+'" src="/img/gray.jpg" data-original="/photo/'+photo.blob_key+'"><p class="time">'+photo.human_time+'</p><p class="cam">Camera: '+photo.camera+'</p></div></div>'
+							    innerhtml = '<div class="span4"><div class="inner-container"><img class="camimg offset'+offset+'" width="320px" height="240px" src="/img/gray.jpg" data-original="/photo/'+photo.blob_key+'"><p class="time">'+photo.human_time+'</p><p class="cam">Camera: '+photo.camera+'</p></div></div>'
 							    midhtml += innerhtml
 						    })
 							
 							console.log(starthtml+midhtml+endhtml)					    
 						    $(".outerrr").append(starthtml+midhtml+endhtml)
 						    
-/*
 						    $("img.offset"+offset).lazyload({ 
-							    effect : "fadeIn"
+							    effect : "fadeIn",
+							    threshold:	600
 							});
-*/
+							
+							loading = false
 		
 					    })
 					    
