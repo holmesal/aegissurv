@@ -55,9 +55,9 @@ class UsersCSVHandler(webapp2.RequestHandler):
 		# initialize the csv writer to write out to response
 		writer = csv.writer(self.response.out)
 		# iterate over all users
-		for user in models.User.all(projection=('name','email','camsbought')).order('name').run():
+		for user in models.User.all(projection=('name','email')).filter('optin',True).order('name').run():
 			# write out name, email, num cameras
-			writer.writerow([user.name,user.email,user.camsbought])
+			writer.writerow([user.name,user.email])
 		
 class TestHandler(webapp2.RequestHandler):
 	def get(self):
