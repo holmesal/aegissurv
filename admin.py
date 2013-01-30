@@ -63,7 +63,7 @@ class TestHandler(webapp2.RequestHandler):
 	def get(self):
 		'''Spoof a bunch of users
 		'''
-#		assert False, 'dont be here'
+		assert False, 'dont be here'
 		cam = models.Camera(camera_id='1').put()
 		cam_list = [cam,]
 		futs = []
