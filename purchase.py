@@ -56,6 +56,7 @@ class PurchaseHandler(webapp2.RequestHandler):
 		stripe_token = self.request.get('stripe_token')
 		amount = self.request.get('amount')
 		numcams = int(self.request.get('numcams'))
+		optin = bool(self.request.get('optin'))
 		
 		logging.debug(email)
 		logging.debug(pw1)
@@ -69,6 +70,7 @@ class PurchaseHandler(webapp2.RequestHandler):
 		logging.debug(stripe_token)
 		logging.debug(amount)
 		logging.debug(numcams)
+		logging.info(optin)
 		
 		session = get_current_session()
 		logging.info(session)
@@ -97,7 +99,8 @@ class PurchaseHandler(webapp2.RequestHandler):
 					addr1=addr1,
 					addr2=addr2,
 					city=city,
-					state=state
+					state=state,
+					optin=optin
 				)
 				
 				logging.info(user)
