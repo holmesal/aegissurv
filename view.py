@@ -221,9 +221,49 @@ class ViewAjaxHandler(webapp2.RequestHandler):
 		
 		self.response.out.write(json.dumps(response))
 
+class ViewCamerasHandler(webapp2.RequestHandler):
+	def get(self):
+		
+		utils.session_bounce(self)
+		
+		#grab session
+		session = get_current_session()
+		camera_keys = session.get("cameras",[])
+		cameras = db.get(camera_keys)
+		
+		template_values = {
+			"cameras"	:	cameras if cameras != [None] else []
+		}
+		
+		logging.info(template_values)
+		
+		
+		utils.respond(self,'templates/managecameras.html',template_values)
+
+class RemoveCameraHandler(webapp2.RequestHandler):
+	def get(self):
+		
+		to_delete = self.request.get("camera",None)
+		
+		#get user
+		session = get_current_session()
+		user = db.get(session.get("user",None))
+		#remove cam
+		user.cameras.remove(db.Key(to_delete))
+		#save
+		user.put()
+		#update session
+		session["cameras"] = user.cameras
+		session.save()
+		
+		
+		self.redirect('/view/cameras')
+
 
 app = webapp2.WSGIApplication([
 	('/view',ViewHandler),
 	('/view/all',ViewAllHandler),
-	('/view/ajax',ViewAjaxHandler)
+	('/view/ajax',ViewAjaxHandler),
+	('/view/cameras',ViewCamerasHandler),
+	('/view/removecamera',RemoveCameraHandler)
 ],debug=True)
