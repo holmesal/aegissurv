@@ -10,6 +10,7 @@ import csv
 import random
 import string
 from google.appengine.ext import db
+import json
 
 jinja_environment = jinja2.Environment(loader=jinja2.FileSystemLoader(os.path.dirname(__file__)))
 class NewCameraHandler(webapp2.RequestHandler):
@@ -31,13 +32,20 @@ class ManageUsersHandler(webapp2.RequestHandler):
 	def get(self):
 		''' Admin is reviewing all users who have purchased cameras
 		'''
-		# async get all users
-		user_keys = models.User.all().order('name').run(keys_only=True)
-		user_futures = db.get_async(user_keys)
-		users = (f.get_result() for f in user_futures)
-		
-		
-		template = jinja_environment.get_template('templates/admin/manageusers.html')
+		projection = ['name','email','cameras']
+		# get all users
+		users = models.User.all(projection=projection).order('name').run()
+		user_dicts = []
+		for user in users:
+			# convert user to dict so we can add cams property
+			user_dict = dict([(x,getattr(user,x)) for x in projection])
+			user_dict['cams'] = db.get_async(user.cameras)
+			user_dicts.append(user_dict)
+		template_values = {
+						'users' : user_dicts
+						}
+		template = jinja_environment.get_template('templates/manageusers.html')
+		self.response.out.write(template.render(template_values))
 class UsersCSVHandler(webapp2.RequestHandler):
 	def get(self):
 		'''Admin is requesting a csv of all users
@@ -55,7 +63,7 @@ class TestHandler(webapp2.RequestHandler):
 	def get(self):
 		'''Spoof a bunch of users
 		'''
-		assert False, 'dont be here'
+#		assert False, 'dont be here'
 		cam = models.Camera(camera_id='1').put()
 		cam_list = [cam,]
 		futs = []
@@ -83,6 +91,7 @@ class TestHandler(webapp2.RequestHandler):
 app = webapp2.WSGIApplication([
 	('/admin/newcamera',NewCameraHandler),
 	('/admin/manage_users',ManageUsersHandler),
+#	('/admin/fetch_more_users',GetUsersAJAXHandler),
 	('/admin/users_csv',UsersCSVHandler),
 	('/admin/test',TestHandler)
 ],debug=True)

@@ -7,17 +7,24 @@
 
 {% block content %}
     <div class="outerrr">
-        {% for photoblock in photos_outer %}
+        <a href="/admin/users_csv" class="btn">Download Data</a>
+        {% for user in users %}
         <div class="row-fluid">
-            {% for photo in photoblock %}
-            <div class="span4">
-                <div class="inner-container">
-                    <img class="camimg" src="/img/gray.jpg" data-original="/photo/{{photo.blob_key.key()}}">
-                    <p class="time">{{photo.human_time}}</p>
-                    <p class="cam">Camera: {{photo.parent().camera_name}}</p>
-                </div>
-            </div>
-            {% endfor %}
+            <h3>{{user.name}}</h3>
+            <p>{{user.email}}</p>
+            <table>
+                {% for cam in user.cams %}
+                    <thead>
+                        <th>Camera ID</th>
+                        <th>Camera Name</th>
+                    </thead>
+                    <tr>
+                        <td>{{ cam.camera_id }}</td>
+                        <td>{{ cam.camera_name }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+            
         </div>
         {%else%}
         <div class="alert alert-info">No photos have been uploaded from this camera.</div>

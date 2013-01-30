@@ -29,5 +29,17 @@ indexes:
 - kind: User
   properties:
   - name: name
+  - name: cameras
+  - name: email
+
+- kind: User
+  properties:
+  - name: name
+  - name: camers
+  - name: email
+
+- kind: User
+  properties:
+  - name: name
   - name: camsbought
   - name: email
