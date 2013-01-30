@@ -43,3 +43,14 @@ indexes:
   - name: name
   - name: camsbought
   - name: email
+
+- kind: User
+  properties:
+  - name: name
+  - name: email
+
+- kind: User
+  properties:
+  - name: optin
+  - name: name
+  - name: email

@@ -22,7 +22,7 @@ class User(db.Model):
 	state = db.StringProperty()
 	stripe_customer_id = db.StringProperty()
 	camsbought = db.IntegerProperty(default=0)
-	optin = db.BooleanProperty(default=False)
+	optin = db.BooleanProperty(default=True)
 
 class Alert(db.Model):
 	alerttype = db.StringProperty()

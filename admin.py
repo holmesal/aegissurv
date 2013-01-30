@@ -34,12 +34,17 @@ class ManageUsersHandler(webapp2.RequestHandler):
 		'''
 		projection = ['name','email','cameras']
 		# get all users
-		users = models.User.all(projection=projection).order('name').run(limit=None)
+		users = models.User.all().order('name').run(limit=None)
 		user_dicts = []
 		for user in users:
 			# convert user to dict so we can add cams property
 			user_dict = dict([(x,getattr(user,x)) for x in projection])
-			user_dict['cams'] = db.get(user.cameras)
+# 			user_dict = []
+			logging.info(user.cameras)
+			if user.cameras != None:
+				user_dict['cams'] = db.get(user.cameras)
+			else:
+				user_dict['cams'] = []
 			user_dicts.append(user_dict)
 		template_values = {
 						'users' : user_dicts
