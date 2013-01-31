@@ -98,5 +98,5 @@ app = webapp2.WSGIApplication([
 	('/admin/manage_users',ManageUsersHandler),
 #	('/admin/fetch_more_users',GetUsersAJAXHandler),
 	('/admin/users_csv',UsersCSVHandler),
-	('/admin/test',TestHandler)
+# 	('/admin/test',TestHandler)
 ],debug=True)

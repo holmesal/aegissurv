@@ -81,7 +81,7 @@ class NotificationHandler(webapp2.RequestHandler):
 				blob_key = self.request.get('blob_key')
 				logging.info(blob_key)
 				#send email
-				message = mail.EmailMessage(sender="Aegis Surveillance <alerts@aegissurveillance.com>", subject="Movement detected")
+				message = mail.EmailMessage(sender="Aegis Surveillance <aegissurveillancealerts@gmail.com>", subject="Movement detected")
 				message.to = owner.email
 				message.body = 'Motion detected on camera "' + camera_name + '".'
 				message.html = '<h3>Motion detected on camera "' + camera_name + '".</h3>'
@@ -126,7 +126,7 @@ class PaymentPlanHandler(webapp2.RequestHandler):
 		user_key = db.Key(self.request.get('user_key'))
 		
 		#stripe api key
-		stripe.api_key = "sk_test_rTlew3qolgnYdtV2uZfj7oZr"
+		stripe.api_key = "sk_live_akeOJiSbC1KhJBOVZlWtsnid"
 		
 		#get user from db
 		user = db.get(user_key)
@@ -163,8 +163,8 @@ class NewOrderHandler(webapp2.RequestHandler):
 		user = db.get(purchase_key.parent())
 		
 		#send email
-		message = mail.EmailMessage(sender="Aegis Surveillance <connorkingman@aegissurveillance.com>", subject="New Purchase")
-		message.to = "Aegis Surveillance <connorkingman@aegissurveillance.com>"
+		message = mail.EmailMessage(sender="Aegis Surveillance <aegissurveillancealerts@gmail.com>", subject="New Purchase")
+		message.to = "Aegis Surveillance <connorkingman@live.com>"
 		message.html = '<h1>Buyer information</h1>'
 		message.html += '<p>Name: ' + user.name + '</p>'
 		message.html += '<p>Email: ' + user.email + '</p>'

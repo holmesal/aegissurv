@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <title>{%block title%}{% endblock %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/img/favicon.png" type="image/png" />
     <meta name="description" content="">
     <meta name="author" content="">
 
@@ -62,10 +63,12 @@
               {% endif %}
             </p>
             <ul class="nav">
+	          {% if loggedin %}
               <li><a href="/view">My Cameras</a></li>
+              {% endif %}
               <li class="active"><a href="/purchase">Purchase Cameras</a></li>
-              <li><a href="/about">About</a></li>
-              <li><a href="/contact">Contact</a></li>
+              <li><a href="/#faq">FAQ</a></li>
+              <li><a href="mailto:connorkingman@aegissurveillance.com">Contact</a></li>
             </ul>
           </div><!--/.nav-collapse -->
         </div>
@@ -427,7 +430,7 @@
 			  if (validate() == true){
 		
 		      StripeCheckout.open({
-		        key:         'pk_test_KKk1lywUYw2elKoRW25xZgjl',
+		        key:         'pk_live_gitVbyTMrS0cfua3yUJHG1yU',
 		        address:     false,
 		        amount:      total*100,
 		        name:        'Aegis Surveillance',

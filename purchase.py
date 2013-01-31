@@ -76,7 +76,7 @@ class PurchaseHandler(webapp2.RequestHandler):
 		logging.info(session)
 		
 		#set stripe api key
-		stripe.api_key = "sk_test_rTlew3qolgnYdtV2uZfj7oZr"
+		stripe.api_key = "sk_live_akeOJiSbC1KhJBOVZlWtsnid"
 		
 		try:
 		

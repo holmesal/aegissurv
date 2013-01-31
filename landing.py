@@ -11,7 +11,7 @@ class LandingHandler(webapp2.RequestHandler):
 	def get(self):
 		
 		template_values = {}
-		utils.respond(self,'templates/landing-false.html',template_values)
+		utils.respond(self,'templates/landing.html',template_values)
 
 app = webapp2.WSGIApplication([
 	('/',LandingHandler)

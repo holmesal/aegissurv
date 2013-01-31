@@ -3,8 +3,9 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Carousel Template &middot; Bootstrap</title>
+    <title>Aegis Surveillance</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/img/favicon.png" type="image/png" />
     <meta name="description" content="">
     <meta name="author" content="">
 
@@ -251,6 +252,30 @@
       }
 
     }
+    
+    .question{
+	    margin-left: 20px;
+	    margin-top: 40px;
+    }
+    
+    .answer{
+	    margin-left: 60px;
+    }
+    
+    .navbar-inner{
+	    position: relative;
+    }
+    
+    .brand{
+	    margin-left: 20px !important;
+    }
+    
+    .logo{
+	    height: 30px;
+	    position: absolute;
+	    margin-top: 10px;
+	    margin-left: -5px;
+    }
     </style>
 
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
@@ -284,15 +309,17 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </a>
-            <a class="brand" href="#">Aegis Surveillance</a>
+            <img src="/img/logosmall.png" class="logo">
+            <a class="brand" href="/">Aegis Surveillance</a>
             <div class="nav-collapse collapse">
-              <ul class="nav">
-                <li class="active"><a href="#">Home</a></li>
-                <li><a href="/blog">Blog</a></li>
-                <li><a href="/faq">FAQ</a></li>
-                <li><a href="/buy">Buy</a></li>
-                <li><a style="float:right;" href="/login">Login</a></li>
-              </ul>
+<!--               <p class="navbar-text pull-right"> -->
+	              <a href="/login" class="navbar-link pull-right" style="padding-top: 15px !important;">Login</a>
+<!-- 	            </p> -->
+            <ul class="nav">
+              <li><a href="/purchase">Purchase Cameras</a></li>
+              <li><a href="#faq">FAQ</a></li>
+              <li><a href="mailto:connorkingman@aegissurveillance.com">Contact</a></li>
+            </ul>
             </div><!--/.nav-collapse -->
           </div><!-- /.navbar-inner -->
         </div><!-- /.navbar -->
@@ -310,9 +337,9 @@
           <img src="/img/slide-01.jpg" alt="">
           <div class="container">
             <div class="carousel-caption">
-              <h1>Example headline.</h1>
-              <p class="lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-              <a class="btn btn-large btn-primary" href="#f1">Sign up today</a>
+              <h1>Powerful surveillance.</h1>
+              <p class="lead">Aegis cameras operate on the Sprint cellular network, allowing them to be deployed anywhere.</p>
+              <a class="btn btn-large btn-primary" href="/purchase">Buy now</a>
             </div>
           </div>
         </div>
@@ -320,9 +347,9 @@
           <img src="/img/slide-02.jpg" alt="">
           <div class="container">
             <div class="carousel-caption">
-              <h1>Another example headline.</h1>
-              <p class="lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-              <a class="btn btn-large btn-primary" href="#f2">Learn more</a>
+              <h1>Real-time</h1>
+              <p class="lead">Set an alert, and get a notification mere seconds after a camera is triggered.</p>
+              <a class="btn btn-large btn-primary" href="/purchase">Buy Now</a>
             </div>
           </div>
         </div>
@@ -330,9 +357,9 @@
           <img src="/img/slide-03.jpg" alt="">
           <div class="container">
             <div class="carousel-caption">
-              <h1>One more for good measure.</h1>
-              <p class="lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-              <a class="btn btn-large btn-primary" href="#f3">Browse gallery</a>
+              <h1>Simple Setup</h1>
+              <p class="lead">Just plug the camera in, and it will begin uploading photos instantly.</p>
+              <a class="btn btn-large btn-primary" href="/purchase">Buy Now</a>
             </div>
           </div>
         </div>
@@ -353,21 +380,21 @@
       <div class="row">
         <div class="span4">
           <img class="img-circle" data-src="holder.js/140x140">
-          <h2>Low cost</h2>
-          <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.</p>
-          <p><a class="btn" href="#f1">View details &raquo;</a></p>
+          <h2>Powerful Surveillance</h2>
+          <p>Aegis cameras operate on the Spring cellular network, allowing them to be deployed anywhere.</p>
+          <p><a class="btn btn-success" href="#f1">Learn More</a></p>
         </div><!-- /.span4 -->
         <div class="span4">
           <img class="img-circle" data-src="holder.js/140x140">
           <h2>Real-time</h2>
-          <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-          <p><a class="btn" href="#f2">View details &raquo;</a></p>
+          <p>Set an alert, and get a notification mere seconds after a camera is triggered.</p>
+          <p><a class="btn btn-success" href="#f2">Learn More</a></p>
         </div><!-- /.span4 -->
         <div class="span4">
           <img class="img-circle" data-src="holder.js/140x140">
           <h2>Simple setup</h2>
-          <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-          <p><a class="btn" href="#f3">View details &raquo;</a></p>
+          <p>Just plug the camera in, and it will begin uploading photos instantly.</p>
+          <p><a class="btn btn-success" href="#f3">Learn More</a></p>
         </div><!-- /.span4 -->
       </div><!-- /.row -->
 
@@ -378,8 +405,9 @@
 
       <div class="featurette" id="f1">
         <img class="featurette-image pull-right" src="/img/side-img-1.png">
-        <h2 class="featurette-heading">Simple, universal surveillance. <span class="muted">Only $149</span></h2>
+        <h2 class="featurette-heading">Simple, universal surveillance. <span class="muted">Only $249</span></h2>
         <p class="lead">This security camera is on the cutting edge of technology by utilizing the Sprint cellular network along with advanced motion activated features on the camera itself, to provide for a prime-time security system. The camera is completely motion activated and takes pictures whenever motion in front of it is detected. These pictures are then immediately uploaded to a secure database to where only an authorized user may access them and configure camera settings. More advanced features include notification to the owner via email if the camera detects motion at a pre-set time. For example, lets say that you know for a fact no one is going to be, or should be, in your backyard between the hours of 11pm and 4am. You simply set these times on our website in your account, and if motion is detected and a picture is taken, you are immediately notified via email. However, an email is only sent out during theses pre-set times. We assumed that you'd find it annoying to get an email every time the camera detected motion throughout the day.</p>
+        <a class="btn btn-large btn-primary" href="/purchase">Buy Now</a>
       </div>
 
       <hr class="featurette-divider">
@@ -388,6 +416,7 @@
         <img class="featurette-image pull-left" src="/img/side-img-2.png">
         <h2 class="featurette-heading">Real-time notifications. <span class="muted">Low monthly cost.</span></h2>
         <p class="lead">Aegis Surveillance has expanded its technologic field to now offer a variety of new systems to fit individual needs. Due to new higher 4G speeds on the Sprint network, there is only a 30 second delay between a bad guy steeling copper from your well, etc., and your phone going 'beep-beep' with an new email and a picture. Giving you enough time to call police or take appropriate action. </br> Thanks to cheaper and more efficient technology being offered by Sprint, we can now offer our customers the camera with a low $40 per month fee <b><i>with no contract</b></i>. Thats right, no contract is required and feel free to cancel your service and get refunded any time. We also cover our camera with a 2-year warrenty. Need multiple cameras but worried about cost? No problem, for every extra camera you purchase, the monthly fee is reduced $5 for that additional camera for up to four cameras. 	</p>
+        <a class="btn btn-large btn-primary" href="/purchase">Buy Now</a>
       </div>
 
       <hr class="featurette-divider">
@@ -396,11 +425,43 @@
         <img class="featurette-image pull-right" src="/img/side-img-3.png">
         <h2 class="featurette-heading">Powerful technology. <span class="muted">Simple setup.</span></h2>
         <p class="lead">Wist most security systems, people always shy away because they're not a "techie" and it's simply too complicated to set up even with the book of instructions that is 20 pages long, (or one huge sheet), in 5-point font. We took that all out. Our security cameras are plug-in-play; meaning, that you simply mount the camera somewhere, then plug it in and it automatically starts uploading pictures. There are no buttons, or dials, (besides the on-off switch) or anything you have to program. It is extremely simple and our security cameras are indoor/outdoor.</p>
+        <a class="btn btn-large btn-primary" href="/purchase">Buy Now</a>
       </div>
 
       <hr class="featurette-divider">
 
       <!-- /END THE FEATURETTES -->
+      
+      <div id="faq" style="margin-bottom: 100px;">
+	      <h2 class="featurette-heading">Frequently Asked Questions</h2>
+	      
+	      <h4 class="question">How difficult is it to set up the cellular system?</h4>
+	      <p class="answer lead">Not difficult at all! It is literally plug and play. As soon as the camera system has power, it starts transmitting. However, in order to link the camera to your account, you'll have to type in the camera ID # and serial # in order to view the pictures and configure settings.</p>
+	      
+	      <h4 class="question">What do you mean by 'configure settings'?</h4>
+	      <p class="answer lead">I mean additional features that can be configured. For example, you can have the camera set to send you an email alert if the motion activation goes off between certain set times.</p>
+	      
+	      <h4 class="question">How much does it cost per month?</h4>
+	      <p class="answer lead">The monthly fee is a low $40 and no contract is required.</p>
+	      
+	      <h4 class="question">Do I have to pay extra for additional features such as email alerts?</h4>
+	      <p class="answer lead">No, all those extra features are included.</p>
+	      
+	      <h4 class="question">What is the warrenty policy and the return policy?</h4>
+	      <p class="answer lead">We have a 50 day return policy and a 1-year warrenty. Basically if the product breaks within one-year, we will fix it for free however you only have 50 days for a full refund if you aren't completely satisfied with the product.</p>
+	      
+	      <h4 class="question">Why is the solar module significantly more expensive than the regular plug-in module?</h4>
+	      <p class="answer lead">Solar panels are expensive to begin with, even for manufacturer like us. Also, the solar module contains a lithium battery pack built in so that the unit can continue to operate throughout the night. These two items unforutately significantly increase the cost of the unit.</p>
+	      
+	      <h4 class="question">Where is the camera system made?</h4>
+	      <p class="answer lead">The cameras are assembled right here in the US with US labor. Only some parts are made oversees and this is simply because they are not made in the US, not because they are cheaper and we are greedy and hence we're trying to increase our profit margin.</p>
+	      
+	      <h4 class="question">When do you ship to?</h4>
+	      <p class="answer lead">Aegis Surveillance on offers support and only ships within the 48 continental United States. This is due to our policy with the Sprint network in that the cameras only work in areas covered by Sprint 3G or 4G. For a map of the Sprint network, please <a href="http://coverage.sprint.com/IMPACT.jsp?INTNAV=ATG:HE:Cov">click here</a>.</p>
+	      
+	      <h4 class="question">Is there a lower cost version?</h4>
+	      <p class="answer lead">We are expanding our product line and are preparing to launch a camera module that uses a SIM card instead of the cellular network. This is a lower cost alternative with no monthly fees. Currently the SIM card can store data for up to 4 months however an option of 1 year will be available. The SIM card simply sticks into the backs and pictures are recorded whenever there is motion. To review the data, simply pull out the SIM card and stick it into your Windows/Mac computer to view all the pictures data for the time period. Use the links on the left to get a sneek peek of our next product.</p>
+      </div>
 
 
       <!-- FOOTER -->
